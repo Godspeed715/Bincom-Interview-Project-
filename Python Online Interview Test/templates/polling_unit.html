@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Polling Unit Results</title>
+    <style>
+        body { font-family: sans-serif; margin: 40px; background-color: #f4f4f4; }
+        .container { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 12px; border: 1px solid #ddd; text-align: left; }
+        th { background-color: #007bff; color: white; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <form method="POST">
+            <select name="pu_id" required>
+                <option value="">-- Select a Polling Unit --</option>
+                {% for pu_id in pu_ids %}
+                <option value="{{ pu_id[0] }}">{{ pu_id[0] }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">Calculate Totals</button>
+        </form>
+        <h1>Results for Polling Unit #{{ selected_id }}</h1>
+        <table>
+            <tr>
+                <th>Party</th>
+                <th>Score</th>
+                <th>Entered By</th>
+                <th>Date</th>
+            </tr>
+            {% for row in results %}
+            <tr>
+                <td>{{ row['party_abbreviation'] }}</td>
+                <td>{{ row['party_score'] }}</td>
+                <td>{{ row['entered_by_user'] }}</td>
+                <td>{{ row['date_entered'] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <br>
+        <a href="/lga_results">← Back to LGA Search</a>
+    </div>
+</body>
+</html>

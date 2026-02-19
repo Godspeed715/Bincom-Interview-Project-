@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add New Results</title>
+    <style>
+        body { font-family: sans-serif; margin: 40px; }
+        .form-container { max-width: 500px; margin: auto; border: 1px solid #ccc; padding: 20px; border-radius: 8px; }
+        .party-input { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input[type="number"], input[type="text"] { width: 100%; padding: 8px; box-sizing: border-box; }
+        .submit-btn { background: #007bff; color: white; padding: 10px 20px; border: none; width: 100%; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Store New PU Results</h1>
+        <form method="POST">
+            <div class="party-input">
+                <label>Polling Unit Unique ID:</label>
+                <input type="text" name="pu_id" placeholder="e.g. 27" required>
+            </div>
+            <hr>
+            {% for party in parties %}
+            <div class="party-input">
+                <label>Score for {{ party['partyid'] }}:</label>
+                <input type="number" name="score_{{ party['partyid'] }}" value="0" min="0" required>
+            </div>
+            {% endfor %}
+            <button type="submit" class="submit-btn">Save All Results</button>
+        </form>
+    </div>
+</body>
+</html>
