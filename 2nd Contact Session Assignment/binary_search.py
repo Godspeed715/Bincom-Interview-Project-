@@ -19,8 +19,6 @@ def binary_search(arr, target):
     # if target wasn't found return -1
     return -1
 
-
-# Example usage (Array MUST be sorted)
 data = [1, 3, 5, 7, 9, 11, 13, 15]
-print(f"Index of 7: {binary_search(data, 7)}")  # Output: 3
-print(f"Index of 10: {binary_search(data, 10)}")  # Output: -1
+print(f"Index of 7: {binary_search(data, 7)}")
+print(f"Index of 10: {binary_search(data, 10)}")
