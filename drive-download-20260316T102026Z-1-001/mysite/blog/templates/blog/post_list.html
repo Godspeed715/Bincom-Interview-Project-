@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Blog</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            max-width: 680px;
+            margin: 60px auto;
+            padding: 0 20px;
+            color: #222;
+        }
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 40px;
+        }
+        .post {
+            border-bottom: 1px solid #eee;
+            padding: 24px 0;
+        }
+        .post h2 {
+            margin: 0 0 10px;
+            font-size: 1.3rem;
+        }
+        .post p {
+            margin: 0 0 10px;
+            line-height: 1.6;
+            color: #444;
+        }
+        .post small {
+            color: #999;
+            font-size: 0.85rem;
+        }
+        .empty {
+            color: #999;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <h1>Blog Posts</h1>
+
+    {% for post in posts %}
+        <div class="post">
+            <h2>{{ post.title }}</h2>
+            <p>{{ post.content }}</p>
+            <small>Posted on {{ post.created_at }}</small>
+        </div>
+    {% empty %}
+        <p class="empty">No posts yet. Add some from the shell.</p>
+    {% endfor %}
+
+</body>
+</html>
