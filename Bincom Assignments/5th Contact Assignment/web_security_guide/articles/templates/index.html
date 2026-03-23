@@ -1,0 +1,90 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ article.title }}</title>
+    <link rel="stylesheet" href="{% static 'home/style.css' %}">
+</head>
+<body>
+    <nav class="navbar">
+    <div class="nav-container">
+        <div class="logo">
+            <a href="/">Web Security Guide</a>
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/owasp/1">OWASP</a></li>
+            <li><a href="/videos/{{article.page_no}}">Videos</a></li>
+        </ul>
+    </div>
+</nav>
+
+
+    <div class="container">
+
+        <!-- Header -->
+        <header>
+            <h1 class="title">{{ article.title }}</h1>
+        </header>
+
+        <!-- Description -->
+        <section class="card">
+            <h2>Description</h2>
+            <p>
+                {{ article.description }}
+            </p>
+        </section>
+
+        <!-- Prevention -->
+        <section class="card">
+            <h2>Prevention</h2>
+            <ul>
+                {% for item in article.prevention %}
+                    <li>{{ item }}</li>
+                {% empty %}
+                    <li>No prevention data available</li>
+                {% endfor %}
+            </ul>
+        </section>
+
+        <!-- Attack Scenarios -->
+        <section class="card">
+            <h2>Attack Scenarios</h2>
+            <ul>
+                {% for scenario in article.attack_scenarios %}
+                    <li>{{ scenario }}</li>
+                {% empty %}
+                    <li>No attack scenarios available</li>
+                {% endfor %}
+            </ul>
+        </section>
+
+        <!-- Navigation -->
+
+        <nav class="nav-buttons">
+        {% if prev_id %}
+            <a href="{% url 'owasp' prev_id %}" class="btn prev">
+                ← Previous
+            </a>
+        {% endif %}
+
+        {% if next_id %}
+            <a href="{% url 'owasp' next_id %}" class="btn next">
+                Next →
+            </a>
+        {% endif %}
+        </nav>
+
+        <!-- Footer -->
+        <footer>
+            <p>OWASP Top 10 2025 | Security Awareness Project</p>
+        </footer>
+
+    </div>
+
+
+</body>
+</html>

@@ -1,0 +1,304 @@
+/* =========================
+   RESET
+========================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* =========================
+   BODY
+========================= */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #0a0a0a;
+    color: #eaeaea;
+    line-height: 1.6;
+}
+
+/* =========================
+   NAVBAR
+========================= */
+.navbar {
+    background: #0f0f0f;
+    border-bottom: 1px solid #1f1f1f;
+    padding: 15px 0;
+}
+
+.nav-container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo a {
+    color: #a855f7;
+    font-size: 1.5rem;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+}
+
+.nav-links a {
+    color: #ccc;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: #a855f7;
+}
+
+/* =========================
+   CONTAINER
+========================= */
+.container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+/* =========================
+   TITLE
+========================= */
+.title {
+    text-align: center;
+    color: #a855f7;
+    font-size: 2rem;
+    margin-bottom: 25px;
+}
+
+/* =========================
+   CARD (OWASP SECTIONS)
+========================= */
+.card {
+    background: #121212;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #222;
+    transition: 0.3s ease;
+}
+
+.card:hover {
+    border-color: #a855f7;
+    box-shadow: 0 0 12px rgba(168, 85, 247, 0.2);
+}
+
+/* =========================
+   TEXT
+========================= */
+h2 {
+    color: #c084fc;
+    margin-bottom: 10px;
+}
+
+p {
+    color: #ccc;
+}
+
+ul {
+    padding-left: 20px;
+}
+
+li {
+    margin-bottom: 8px;
+    color: #bbb;
+}
+
+li::marker {
+    color: #a855f7;
+}
+
+/* =========================
+   NAV BUTTONS (OWASP)
+========================= */
+.nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+.btn {
+    padding: 10px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #fff;
+    background: #1a1a1a;
+    border: 1px solid #333;
+    transition: 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.btn:hover {
+    background: #a855f7;
+    border-color: #a855f7;
+}
+
+/* =========================
+   HERO (HOME PAGE)
+========================= */
+.hero {
+    text-align: center;
+    padding: 80px 20px;
+}
+
+.hero-title {
+    font-size: 3rem;
+    color: #a855f7;
+    margin-bottom: 15px;
+}
+
+.hero-subtitle {
+    color: #bbb;
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+}
+
+/* HERO BUTTONS */
+.hero-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.btn.primary {
+    background: #a855f7;
+    border: none;
+}
+
+.btn.secondary {
+    background: transparent;
+    border: 1px solid #a855f7;
+}
+
+/* =========================
+   FEATURES (HOME)
+========================= */
+.features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+    max-width: 1000px;
+    margin: 60px auto;
+    padding: 0 20px;
+}
+
+.feature-card {
+    background: #121212;
+    padding: 25px;
+    border-radius: 12px;
+    border: 1px solid #222;
+    text-align: center;
+    transition: 0.3s ease;
+}
+
+.feature-card:hover {
+    border-color: #a855f7;
+    transform: translateY(-5px);
+}
+
+/* =========================
+   CTA
+========================= */
+.cta {
+    text-align: center;
+    margin: 80px 0;
+}
+
+.cta h2 {
+    margin-bottom: 20px;
+    color: #ddd;
+}
+
+/* =========================
+   VIDEOS GRID
+========================= */
+.video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.video-card {
+    background: #121212;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #222;
+    transition: 0.3s ease;
+}
+
+.video-card:hover {
+    border-color: #a855f7;
+}
+
+.video-card iframe {
+    width: 100%;
+    height: 360px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+/* VIDEO WRAPPER (Responsive 16:9) */
+.video-wrapper {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* 16:9 ratio */
+    height: 0;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+/* IFRAME */
+.video-wrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.video-card h3 {
+    font-size: 0.95rem;
+    color: #ccc;
+}
+
+/* =========================
+   FOOTER (OPTIONAL)
+========================= */
+footer {
+    text-align: center;
+    margin-top: 40px;
+    color: #666;
+    font-size: 0.85rem;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 600px) {
+
+    .hero-title {
+        font-size: 2rem;
+    }
+
+    .nav-links {
+        gap: 12px;
+    }
+
+    .container {
+        padding: 15px;
+    }
+
+}

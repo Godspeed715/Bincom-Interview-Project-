@@ -1,0 +1,76 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Security Guide</title>
+    <link rel="stylesheet" href="{% static 'home/style.css' %}">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+    <div class="nav-container">
+        <div class="logo">
+            <a href="/">Web Security Guide</a>
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/owasp/1">OWASP</a></li>
+            <li><a href="/videos/1">Videos</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+
+    <h1 class="hero-title">Web Security Guide</h1>
+
+    <p class="hero-subtitle">
+        Learn, Understand, and Defend Against Modern Web Vulnerabilities
+    </p>
+
+    <div class="hero-buttons">
+        <a href="/owasp/1" class="btn primary">Explore OWASP</a>
+        <a href="/videos/1" class="btn secondary">Watch Videos</a>
+    </div>
+
+</div>
+
+<!-- FEATURES -->
+<div class="features">
+
+    <div class="feature-card">
+        <h2>🔐 OWASP Top 10</h2>
+        <p>
+            Deep dive into the most critical web security risks and how to prevent them.
+        </p>
+    </div>
+
+    <div class="feature-card">
+        <h2>🎥 Video Learning</h2>
+        <p>
+            Learn visually with curated security tutorials and real-world examples.
+        </p>
+    </div>
+
+    <div class="feature-card">
+        <h2>⚡ Practical Knowledge</h2>
+        <p>
+            Understand attack scenarios and apply prevention techniques effectively.
+        </p>
+    </div>
+
+</div>
+
+<!-- CTA -->
+<div class="cta">
+    <h2>Start Your Security Journey Today</h2>
+    <a href="/owasp/1" class="btn primary">Get Started →</a>
+</div>
+
+</body>
+</html>
