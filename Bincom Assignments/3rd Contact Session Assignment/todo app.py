@@ -1,4 +1,4 @@
-import psycopg
+import psycopg2
 import os
 from dotenv import load_dotenv
 load_dotenv()
@@ -6,14 +6,40 @@ load_dotenv()
 DB_PASSWORD = os.getenv("DB_PASSWORD")
 DB_URI = f"postgresql://postgres:{DB_PASSWORD}@localhost:5432/postgres"
 
+class Task:
+    def __init__(self, title, status="Pending"):
+        with psycopg2.connect(DB_URI) as conn:
+            with conn.cursor() as cur:
+                add_task_query = """
+                INSERT INTO todos (title, status)
+                VALUES (%s, %s)
+                """
+                cur.execute(add_task_query, (title, status))
+                conn.commit()
+        self.title = title
+        self.status = status
+
+    def complete(id):
+        with psycopg2.connect(DB_URI) as conn:
+            with conn.cursor() as cur:
+                complete_query = """
+                UPDATE todos SET status = 'Done' WHERE id = %s
+                """
+                cur.execute(complete_query, (id,))
+                conn.commit()
+        print(f"Task '{get_task_title(id)[0]}' marked Done.")
+
+    def show_info(self):
+        print(f"[{self.title}] - {self.status}")
+
 def create_table():
-    with psycopg.connect(DB_URI) as conn:
+    with psycopg2.connect(DB_URI) as conn:
         with conn.cursor() as cur:
             create_table_query = '''
             CREATE TABLE IF NOT EXISTS todos (
                 id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
                 title TEXT NOT NULL,
-                description TEXT,
+                status TEXT NOT NULL DEFAULT 'Pending',
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
             '''
@@ -21,96 +47,73 @@ def create_table():
             cur.execute(create_table_query)
             conn.commit()
 
-def insert_todo(title, description):
-    with psycopg.connect(DB_URI) as conn:
+def show_tasks():
+    with psycopg2.connect(DB_URI) as conn:
         with conn.cursor() as cur:
-            insert_query = '''
-            INSERT INTO todos (title, description)
-            VALUES (%s, %s)
-                           '''
-            cur.execute(insert_query, (title, description))
-            conn.commit()
-    print("Task inserted")
-
-def get_all_todos():
-    with psycopg.connect(DB_URI) as conn:
-        with conn.cursor() as cur:
-            get_query = '''
-            SELECT id,title FROM todos'''
-            todos = cur.execute(get_query).fetchall()
-            return todos
-
-def get_todo(id):
-    with psycopg.connect(DB_URI) as conn:
-        with conn.cursor() as cur:
-            get_query = '''
-            SELECT * FROM todos WHERE id = %s
-                        '''
-            todo = cur.execute(get_query, (id,)).fetchone()
-            return todo
-
-def delete_todo(id):
-    with psycopg.connect(DB_URI) as conn:
-        with conn.cursor() as cur:
-            delete_query = '''
-            DELETE FROM todos WHERE id = %s'''
-            cur.execute(delete_query, (id,))
-            conn.commit()
-    print("Task deleted")
-    print()
-
-
-def update_todo(id, title, description):
-    with psycopg.connect(DB_URI) as conn:
-        with conn.cursor() as cur:
-            update_query = """
-            UPDATE todos SET title = %s, description = %s WHERE id = %s
+            show_tasks_query = """
+            SELECT * FROM todos
             """
-            cur.execute(update_query, (title, description,id))
-            conn.commit()
-    print("Task updated")
+            cur.execute(show_tasks_query)
+            tasks = cur.fetchall()
+    return tasks
 
-def display_tasks(todos):
-    print("Your tasks")
-    for task in todos:
-        print(task[0], task[1])
-    print()
+def get_task_title(id):
+    with psycopg2.connect(DB_URI) as conn:
+        with conn.cursor() as cur:
+            show_tasks_query = """
+            SELECT title FROM todos WHERE id = %s
+            """
+            cur.execute(show_tasks_query, (id,))
+            task = cur.fetchone()
+    return task
 
 if __name__ == '__main__':
     create_table()
+
+
+    session_tasks = []
+
     while True:
-        print("This is a TODO app, you can perform the following actions:\n1. View All Tasks\n2. Add Tasks\n3. View a Task and Details\n4. Delete Tasks\n5. Update Tasks\n6. Exit")
+        print("\nTODO APP: Select an option: ")
+        print("1. Add a Task")
+        print("2. View Session Tasks")
+        print("3. Complete a Task")
+        print("4. Exit")
         choice = input("Enter your choice: ")
         print()
-        # View All Tasks
-        if choice == "1":
-            todos = get_all_todos()
-            display_tasks(todos)
-        # Add a task
-        elif choice == "2":
-            insert_todo(title=input("Title: "), description=input("Description: "))
-        # View a Task
-        elif choice =="3":
-            print("Enter the id of the task:")
-            task = get_todo(input("id: "))
-            print()
-            print(f"ID: {task[0]}\nTitle: {task[1]}\nDescription: {task[2]}")
-            print()
-        #   Delete a Task
-        elif choice == "4":
-            delete_todo(input("Enter the id of the task to delete: "))
-        #     Update Todo
-        elif choice == "5":
-            todo_id = input("Enter the id of the task to update: ")
-            todo = get_todo(todo_id)
-            print("Title: ", todo[1]," => ", end=" ")
-            new_title = input("")
-            print()
-            print("Description: ", todo[2]," => ", end=" ")
-            new_description = input("")
-            update_todo(todo_id, new_title, new_description)
-        # Exit the Application
-        elif choice == "6":
-            exit()
 
-print("Thank you for using my application🤗")
+        # Add a task using Task.__init__
+        if choice == "1":
+            title_input = input("Title: ")
+            new_task = Task(title=title_input)
+            session_tasks.append(new_task)
+            print(f"Task '{title_input}' added to the database!")
+
+        # View tasks using Task.show_info
+        elif choice == "2":
+            tasks = show_tasks()
+            if len(tasks) > 0:
+                for task in tasks:
+                    print(f"ID: {task[0]} | Title: {task[1]} | Status: {task[2]}" )
+            else:
+                print("You don't have any tasks.")
+
+
+        # Complete a task using Task.complete
+        elif choice == "3":
+            try:
+                task_id = int(input("Enter the List ID of the task to complete: "))
+                if task_id > 0:
+                    Task.complete(task_id)
+                else:
+                    print("Invalid Task ID.")
+            except ValueError:
+                print("Please enter a valid number.")
+
+        # Exit the Application
+        elif choice == "4":
+            print("Thank you for using my application 🤗")
+            break
+
+        else:
+            print("Invalid choice. Please enter 1, 2, 3, or 4.")
